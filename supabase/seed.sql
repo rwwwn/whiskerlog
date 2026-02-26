@@ -1,0 +1,36 @@
+-- ============================================================
+-- WhiskerLog — Seed Data (development only)
+-- ============================================================
+-- NOTE: Replace the UUID with a real auth.users id from your
+-- Supabase project when testing locally.
+
+-- Example profile (auto-created by trigger on sign-up)
+-- INSERT INTO public.profiles (id, email, full_name)
+-- VALUES ('00000000-0000-0000-0000-000000000001', 'demo@whiskerlog.app', 'Demo User');
+
+-- Example pet
+-- INSERT INTO public.pets (id, user_id, name, breed, age_years, weight_kg, medical_notes)
+-- VALUES (
+--   '00000000-0000-0000-0000-000000000010',
+--   '00000000-0000-0000-0000-000000000001',
+--   'Luna',
+--   'Maine Coon',
+--   3.0,
+--   5.2,
+--   'Annual checkup due in March. No known allergies.'
+-- );
+
+-- Example log entries (last 10 days)
+-- INSERT INTO public.logs
+--   (pet_id, user_id, log_date, food_type, food_amount_grams, water_intake_ml, mood, energy_level, litter_box_urinations, litter_box_defecations)
+-- VALUES
+--   ('00000000-0000-0000-0000-000000000010', '00000000-0000-0000-0000-000000000001', CURRENT_DATE - 9, 'Dry kibble',  85, 190, 'happy',    4, 3, 1),
+--   ('00000000-0000-0000-0000-000000000010', '00000000-0000-0000-0000-000000000001', CURRENT_DATE - 8, 'Dry kibble',  80, 200, 'calm',     4, 2, 1),
+--   ('00000000-0000-0000-0000-000000000010', '00000000-0000-0000-0000-000000000001', CURRENT_DATE - 7, 'Wet food',    90, 180, 'playful',  5, 3, 2),
+--   ('00000000-0000-0000-0000-000000000010', '00000000-0000-0000-0000-000000000001', CURRENT_DATE - 6, 'Dry kibble',  82, 195, 'calm',     4, 3, 1),
+--   ('00000000-0000-0000-0000-000000000010', '00000000-0000-0000-0000-000000000001', CURRENT_DATE - 5, 'Wet food',    88, 210, 'happy',    5, 4, 1),
+--   ('00000000-0000-0000-0000-000000000010', '00000000-0000-0000-0000-000000000001', CURRENT_DATE - 4, 'Dry kibble',  84, 240, 'calm',     3, 3, 1),
+--   ('00000000-0000-0000-0000-000000000010', '00000000-0000-0000-0000-000000000001', CURRENT_DATE - 3, 'Dry kibble',  80, 260, 'calm',     3, 4, 1),
+--   ('00000000-0000-0000-0000-000000000010', '00000000-0000-0000-0000-000000000001', CURRENT_DATE - 2, 'Wet food',    75, 280, 'lethargic',2, 3, 1),
+--   ('00000000-0000-0000-0000-000000000010', '00000000-0000-0000-0000-000000000001', CURRENT_DATE - 1, 'Dry kibble',  78, 295, 'lethargic',2, 4, 1),
+--   ('00000000-0000-0000-0000-000000000010', '00000000-0000-0000-0000-000000000001', CURRENT_DATE,     'Dry kibble',  76, 310, 'anxious',  2, 5, 1);
