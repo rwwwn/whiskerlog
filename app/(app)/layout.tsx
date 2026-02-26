@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { BottomNav } from "@/components/shared/BottomNav";
 import { HouseholdProvider } from "@/hooks/useHousehold";
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 export default async function AppLayout({
   children,
 }: {
