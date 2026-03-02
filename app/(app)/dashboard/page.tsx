@@ -10,6 +10,7 @@ import {
   UtensilsCrossed, Pill, Apple, Activity, Bell, Sparkles,
 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { MultiMealButton } from "@/components/meals/MultiMealButton";
 
 export const metadata: Metadata = { title: "البيت" };
 export const dynamic = "force-dynamic";
@@ -157,6 +158,11 @@ export default async function HomePage() {
               <p className="text-xs text-sage-600 mt-0.5">حيواناتك بخير تماماً</p>
             </div>
           </div>
+        )}
+
+        {/* Multi-meal button */}
+        {pets.length > 0 && (
+          <MultiMealButton pets={pets} />
         )}
 
         {/* Alert strip */}

@@ -907,7 +907,9 @@ FROM public.treatment_plans tp
 JOIN public.pets p ON p.id = tp.pet_id
 WHERE tp.is_active = TRUE;
 
-CREATE OR REPLACE VIEW public.todays_vitamins_view AS
+DROP VIEW IF EXISTS public.todays_vitamins_view;
+
+CREATE VIEW public.todays_vitamins_view AS
 SELECT
   pv.id           AS pet_vitamin_id,
   pv.pet_id,
@@ -1051,6 +1053,11 @@ CREATE INDEX IF NOT EXISTS idx_meal_event_pets_pet     ON public.meal_event_pets
 -- RLS for meal_events
 ALTER TABLE public.meal_events ENABLE ROW LEVEL SECURITY;
 
+DROP POLICY IF EXISTS "household members can read meal_events" ON public.meal_events;
+DROP POLICY IF EXISTS "household members can insert meal_events" ON public.meal_events;
+DROP POLICY IF EXISTS "logged_by user can update meal_events" ON public.meal_events;
+DROP POLICY IF EXISTS "logged_by user can delete meal_events" ON public.meal_events;
+
 CREATE POLICY "household members can read meal_events"
   ON public.meal_events FOR SELECT
   USING (public.is_household_member(household_id));
@@ -1069,6 +1076,9 @@ CREATE POLICY "logged_by user can delete meal_events"
 
 -- RLS for meal_event_pets
 ALTER TABLE public.meal_event_pets ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "household members can read meal_event_pets" ON public.meal_event_pets;
+DROP POLICY IF EXISTS "household members can insert meal_event_pets" ON public.meal_event_pets;
 
 CREATE POLICY "household members can read meal_event_pets"
   ON public.meal_event_pets FOR SELECT
