@@ -12,6 +12,7 @@ import {
 import { Progress } from "@/components/ui/progress";
 import { MultiMealButton } from "@/components/meals/MultiMealButton";
 import { MealSlots } from "@/components/meals/MealSlots";
+import { TodaysReminders } from "@/components/reminders/TodaysReminders";
 
 export const metadata: Metadata = { title: "البيت" };
 export const dynamic = "force-dynamic";
@@ -173,6 +174,17 @@ export default async function HomePage() {
         {/* Multi-meal button */}
         {pets.length > 0 && (
           <MultiMealButton pets={pets} />
+        )}
+
+        {/* Today's medicine reminders */}
+        {pets.length > 0 && (
+          <div className="rounded-3xl border border-stone-200 bg-white py-3 shadow-sm">
+            <div className="mb-2 flex items-center justify-between px-4">
+              <p className="text-sm font-bold text-stone-900">تنبيهات الدواء اليوم</p>
+              <Link href="/reminders/new" className="text-[11px] text-sage-600 font-semibold">إضافة تنبيه</Link>
+            </div>
+            <TodaysReminders userId={user.id} />
+          </div>
         )}
 
         {/* Alert strip */}
