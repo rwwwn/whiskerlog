@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { MultiMealButton } from "@/components/meals/MultiMealButton";
+import { MealSlots } from "@/components/meals/MealSlots";
 
 export const metadata: Metadata = { title: "البيت" };
 export const dynamic = "force-dynamic";
@@ -101,7 +102,16 @@ export default async function HomePage() {
                  && (vits.length  === 0 || vits.every(v => v.givenToday))
                  && !risk;
 
-    return { pet, meals: { total: totalSlots, completed: completedSlots }, meds, vitamins: vits, risk, allDone };
+    return {
+      pet,
+      meals: { total: totalSlots, completed: completedSlots },
+      plans: plans,
+      completions: completions,
+      meds,
+      vitamins: vits,
+      risk,
+      allDone
+    };
   });
 
   const allPetsDone = petDays.length > 0 && petDays.every(pd => pd.allDone);
@@ -183,7 +193,7 @@ export default async function HomePage() {
         )}
 
         {/* Per-pet cards */}
-        {petDays.map(({ pet, meals, meds, vitamins, risk, allDone }) => (
+        {petDays.map(({ pet, meals, plans, completions, meds, vitamins, risk, allDone }) => (
           <div key={pet.id} className="rounded-3xl border border-stone-200 bg-white shadow-sm overflow-hidden">
 
             <div className="flex items-center gap-3 px-4 py-3.5 border-b border-stone-100">
@@ -223,6 +233,17 @@ export default async function HomePage() {
                   <Progress value={meals.total > 0 ? (meals.completed / meals.total) * 100 : 0} className="h-2 bg-stone-100 [&>*]:bg-amber-400" />
                   {meals.completed >= meals.total && (
                     <p className="text-[11px] text-sage-600 font-semibold">جميع الوجبات مكتملة</p>
+                  )}
+                  {plans.length > 0 && (
+                    plans.map((plan: any) => (
+                      <MealSlots
+                        key={plan.id}
+                        planId={plan.id}
+                        petName={pet.name}
+                        mealTimes={plan.meal_times ?? []}
+                        completedSlots={(completions.find((c: any) => c.meal_plan_id === plan.id)?.completed_slots ?? []) as any}
+                      />
+                    ))
                   )}
                 </div>
               ) : (
