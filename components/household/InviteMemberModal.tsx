@@ -38,6 +38,8 @@ export function InviteMemberModal({
   const [role, setRole] = useState<HouseholdRole>('member');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [inviteUrl, setInviteUrl] = useState<string | null>(null);
+  const [invitedEmail, setInvitedEmail] = useState<string | null>(null);
 
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -71,16 +73,15 @@ export function InviteMemberModal({
 
       toast({
         title: 'Invitation sent!',
-        description: `An invitation has been sent to ${email}`,
+        description: `An invitation email has been sent to ${email}. They can also use the link below.`,
       });
 
+      // Store the invite URL and email for display
+      setInviteUrl(inviteUrl);
+      setInvitedEmail(email);
       setEmail('');
       setRole('member');
-      onOpenChange(false);
       onSuccess?.();
-
-      // Optionally, you could copy the link to clipboard or show it
-      console.log('Invite link:', inviteUrl);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Failed to send invitation';
       setError(message);
@@ -104,7 +105,64 @@ export function InviteMemberModal({
           </DialogDescription>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        {inviteUrl && invitedEmail ? (
+          // Success state: Show invite link
+          <div className="space-y-4">
+            <div className="rounded-lg bg-green-50 p-4 border border-green-200">
+              <p className="text-sm font-medium text-green-800 mb-2">✓ Invitation sent!</p>
+              <p className="text-sm text-green-700 mb-3">
+                An email invitation has been sent to <strong>{invitedEmail}</strong>.
+              </p>
+              <p className="text-sm text-green-600 mb-4">
+                You can also share this direct link if needed:
+              </p>
+              
+              <div className="bg-white p-3 rounded border border-green-200 mb-3">
+                <p className="text-xs text-slate-600 break-all font-mono">{inviteUrl}</p>
+              </div>
+              
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(inviteUrl);
+                  toast({
+                    title: 'Copied!',
+                    description: 'Invite link copied to clipboard',
+                  });
+                }}
+                className="text-sm text-green-700 hover:text-green-900 font-medium underline"
+              >
+                Copy Link
+              </button>
+            </div>
+
+            <div className="flex gap-3 pt-4">
+              <Button
+                onClick={() => {
+                  onOpenChange(false);
+                  setInviteUrl(null);
+                  setInvitedEmail(null);
+                  setError(null);
+                }}
+                className="flex-1"
+              >
+                Done
+              </Button>
+              <Button
+                variant="outline"
+                onClick={() => {
+                  setInviteUrl(null);
+                  setInvitedEmail(null);
+                  setError(null);
+                }}
+                className="flex-1"
+              >
+                Invite Another
+              </Button>
+            </div>
+          </div>
+        ) : (
+          // Form state: Show invitation form
+          <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="email">Email Address</Label>
             <Input
@@ -162,6 +220,7 @@ export function InviteMemberModal({
             </Button>
           </div>
         </form>
+        )}
       </DialogContent>
     </Dialog>
   );
